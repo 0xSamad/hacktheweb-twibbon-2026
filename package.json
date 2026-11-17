@@ -1,0 +1,12 @@
+{
+  "name": "hacktheweb-twibbon-2026",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "HACK THE WEB CTF 2026 participant poster maker, ready for Vercel.",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "start": "node scripts/serve.mjs"
+  },
+  "engines": { "node": ">=20" }
+}

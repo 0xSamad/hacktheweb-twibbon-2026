@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f4ec">
+  <meta name="description" content="Make your official HACK THE WEB CTF 2026 participant poster. Add your photo and name, then share your spot on the leaderboard. 5 December, 8–11 PM Pakistan time.">
+  <meta property="og:title" content="Your next challenge has a face. | HACK THE WEB 2026">
+  <meta property="og:description" content="Create your participant poster. 5 December 2026 · 8–11 PM PKT · Online · Free · Individual.">
+  <meta property="og:type" content="website">
+  <title>Make your mark. | HACK THE WEB CTF 2026</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/assets/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/dm-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/js/app.js" type="module"></script>
+</head>
+<body>
+  <svg class="icon-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="arrow" viewBox="0 0 24 24"><path d="M5 19 19 5M5 5h14v14"/></symbol>
+    <symbol id="upload-icon" viewBox="0 0 24 24"><path d="M12 16V4m-5 5 5-5 5 5M4 16v4h16v-4"/></symbol>
+    <symbol id="download-icon" viewBox="0 0 24 24"><path d="M12 4v12m-5-5 5 5 5-5M4 17v4h16v-4"/></symbol>
+    <symbol id="reset-icon" viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 1 8M4 4v6h6"/></symbol>
+    <symbol id="copy-icon" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V3H3v13h5"/></symbol>
+    <symbol id="plus-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  </svg>
+  <a class="skip-link" href="#editor">Skip to poster editor</a>
+  <header class="site-header shell">
+    <a class="brand" href="https://peshawarpentesters.org" target="_blank" rel="noopener noreferrer" aria-label="Peshawar Pentesters website">
+      <img src="/assets/organizer.png" alt="" width="44" height="44">
+      <span>PESHAWAR<br>PENTESTERS</span>
+    </a>
+    <span class="edition">HACK THE WEB <span>2026</span></span>
+    <nav class="header-nav" aria-label="Event links">
+      <a data-event-link="discord" href="https://discord.gg/TDjcgRTwW4" target="_blank" rel="noopener noreferrer">Discord <svg class="icon"><use href="#arrow"/></svg></a>
+      <a class="register-link" data-event-link="registration" href="https://script.google.com/macros/s/AKfycbz7n8MoTqDzRLVgF_y2nEZCg2XxugEDfajji6SpQpsL1fJRMu1i_lPbQxYLEGSdUGGe/exec" target="_blank" rel="noopener noreferrer">Register for free <svg class="icon"><use href="#arrow"/></svg></a>
+    </nav>
+  </header>
+
+  <main class="shell">
+    <section class="intro" aria-labelledby="page-title">
+      <div class="intro-copy">
+        <p class="eyebrow"><span class="status-dot"></span> THE OFFICIAL PARTICIPANT POSTER</p>
+        <h1 id="page-title">Your next challenge<br>has <span>a face.</span><svg class="title-spark" viewBox="0 0 80 80" aria-hidden="true"><path d="m40 0 7 27 24-13-13 24 22 5-27 6 13 23-24-14-6 22-5-27L8 66l15-24L0 36l27-5L14 8l24 15Z"/></svg></h1>
+        <p class="intro-description">Put yourself in the frame. Make it official.<br>We'll see you on the leaderboard.</p>
+      </div>
+      <div class="event-stamp">
+        <span class="stamp-label">SAVE YOUR EVENING</span>
+        <strong>05 <span>DEC '26</span></strong>
+        <p>8–11 PM <span>PKT / UTC+5</span></p>
+        <div>ONLINE <span>·</span> FREE <span>·</span> INDIVIDUAL</div>
+      </div>
+    </section>
+
+    <section id="editor" class="studio" aria-label="Participant poster editor">
+      <div class="preview-column">
+        <div class="panel-heading"><span><i></i> YOUR POSTER, LIVE</span><span>PORTRAIT / 4:5</span></div>
+        <div class="poster-board" id="poster-board" aria-busy="true">
+          <canvas id="poster" width="2160" height="2700" aria-label="Your personalized HACK THE WEB participant poster. Upload a photo and use the photo position controls to adjust it." tabindex="0"></canvas>
+          <div id="loading" class="loading-state" role="status">Getting your frame ready…</div>
+        </div>
+        <div class="preview-note"><span>Drag your photo to find your angle.</span><span class="quality-label">2160 × 2700 PX</span></div>
+      </div>
+
+      <div class="editor-column">
+        <section class="editor-card" aria-labelledby="personalize-title">
+          <div class="card-title"><span class="step">01</span><h2 id="personalize-title">Make it yours.</h2><span class="small-star" aria-hidden="true">✳</span></div>
+          <div class="field">
+            <label class="field-label" for="photo">Your photo</label>
+            <label class="upload-area" id="upload-area" for="photo">
+              <span class="upload-symbol"><svg class="icon"><use href="#upload-icon"/></svg></span>
+              <span><strong id="upload-label">Choose a photo</strong><small>or drop it here · JPG, PNG, WebP · up to 20 MB</small></span>
+              <input type="file" id="photo" accept="image/jpeg,image/png,image/webp">
+            </label>
+            <p class="field-hint" id="photo-hint">Your photo stays on your device.</p>
+          </div>
+          <div class="field">
+            <div class="label-row"><label class="field-label" for="participant-name">Your name</label><span id="name-count">0 / 48</span></div>
+            <input id="participant-name" name="name" type="text" maxlength="48" placeholder="The name they'll see on the leaderboard" autocomplete="name" aria-describedby="name-count">
+          </div>
+          <div class="field subtitle-field">
+            <label class="field-label" for="participant-title">A little about you <span>(optional)</span></label>
+            <input id="participant-title" type="text" maxlength="48" placeholder="e.g. Web security enthusiast">
+          </div>
+          <fieldset id="photo-controls" class="photo-controls" disabled>
+            <legend>Find your frame</legend>
+            <div class="label-row"><label for="zoom">Zoom</label><output id="zoom-output" for="zoom">100%</output></div>
+            <div class="range-row"><span aria-hidden="true">−</span><input id="zoom" type="range" min="100" max="300" value="100" step="1"><span aria-hidden="true">+</span></div>
+            <details class="position-details"><summary>Fine-tune photo position</summary>
+              <label for="horizontal">Left / right</label><input id="horizontal" type="range" min="0" max="100" value="50">
+              <label for="vertical">Up / down</label><input id="vertical" type="range" min="0" max="100" value="50">
+              <p class="field-hint">You can also focus the preview and use the arrow keys.</p>
+            </details>
+            <button id="reset-photo" class="text-button" type="button"><svg class="icon"><use href="#reset-icon"/></svg> Reset photo position</button>
+          </fieldset>
+          <div class="download-section">
+            <div class="label-row"><span class="field-label">Ready for your feed</span><div class="format-options" role="group" aria-label="Download format"><button type="button" class="selected" data-format="jpeg" aria-pressed="true">JPG</button><button type="button" data-format="png" aria-pressed="false">PNG</button></div></div>
+            <button id="download" class="button button-primary" type="button" disabled>Download your poster <svg class="icon"><use href="#download-icon"/></svg></button>
+            <p id="editor-status" class="feedback" role="status" aria-live="polite">Add your photo and name to download.</p>
+          </div>
+        </section>
+
+        <section class="share-card" aria-labelledby="share-title">
+          <div class="card-title"><span class="step">02</span><h2 id="share-title">Let them know.</h2></div>
+          <p>Your poster. Your announcement. Copy the caption and bring your people into the challenge.</p>
+          <details id="caption-details"><summary>View & edit your caption <svg class="icon"><use href="#plus-icon"/></svg></summary><label class="sr-only" for="caption">LinkedIn post caption</label><textarea id="caption" rows="14" spellcheck="true"></textarea></details>
+          <div class="share-actions"><button id="copy-caption" class="button button-light" type="button"><svg class="icon"><use href="#copy-icon"/></svg> Copy caption</button><a class="button button-dark" href="https://www.linkedin.com/feed/" target="_blank" rel="noopener noreferrer">Open LinkedIn <svg class="icon"><use href="#arrow"/></svg></a></div>
+          <button id="share-device" class="text-button" type="button" hidden disabled>Share poster through your device <svg class="icon"><use href="#arrow"/></svg></button>
+          <p class="share-help">On LinkedIn, attach your downloaded poster and paste the caption. Tag Peshawar Pentesters so we can cheer you on.</p>
+          <p id="share-status" class="feedback" role="status" aria-live="polite"></p>
+        </section>
+        <div class="registration-note"><span aria-hidden="true">↗</span><p>Poster made? Make sure you're on the list.<br><a data-event-link="registration" href="https://script.google.com/macros/s/AKfycbz7n8MoTqDzRLVgF_y2nEZCg2XxugEDfajji6SpQpsL1fJRMu1i_lPbQxYLEGSdUGGe/exec" target="_blank" rel="noopener noreferrer">Register for HACK THE WEB 2026</a></p></div>
+      </div>
+    </section>
+
+    <section class="sponsors" aria-labelledby="sponsor-title">
+      <div><p class="eyebrow" id="sponsor-title">BACKING THE NEXT WAVE</p><p>Good challenges. Great company.</p></div>
+      <div class="sponsor-list">
+        <div class="sponsor webverse"><img src="/assets/webverse.png" alt="Webverse logo" width="52" height="52"><strong>WEBVERSE</strong></div>
+        <div class="sponsor cybrixen"><img src="/assets/cybrixen.png" alt="Cybrixen logo" width="58" height="58"><strong>CYBRIXEN</strong></div>
+        <div class="sponsor altered"><img src="/assets/altered-security.png" alt="Altered Security" width="164" height="48"></div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer shell"><span>© 2026 Peshawar Pentesters</span><span>Capture the flag. Claim the prize.</span><a data-event-link="discord" href="https://discord.gg/TDjcgRTwW4" target="_blank" rel="noopener noreferrer">See you in Discord <svg class="icon"><use href="#arrow"/></svg></a></footer>
+  <noscript><p class="noscript">Enable JavaScript to personalize and download your poster. <a href="https://discord.gg/TDjcgRTwW4">Join the event Discord</a>.</p></noscript>
+</body>
+</html>
