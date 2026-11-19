@@ -1,6 +1,6 @@
 # HACK THE WEB 2026 · Participant poster studio
 
-A Vercel-ready participant poster maker for Peshawar Pentesters. The portrait composition takes inspiration from the supplied black, purple, magenta, and cream badge design. Its exported poster includes Webverse, Cybrixen, and Altered Security.
+A Vercel-ready participant poster maker for Peshawar Pentesters. The portrait composition uses a dark navy terminal frame, mint highlights, circuit traces, and capture-the-flag artwork. Its exported poster includes Webverse, Cybrixen, and Altered Security in equal sponsor cards with matching visible logo heights.
 
 **Event:** 5 December 2026, 8:00–11:00 PM Pakistan Standard Time (UTC+5). Online, free, individual participation.
 
@@ -27,6 +27,18 @@ npm run dev
 
 Open http://127.0.0.1:5173. A static HTTP server also works. Use HTTP rather than opening `index.html` as a `file://` URL because the app uses JavaScript modules.
 
+## Original design restore point
+
+The original website was committed before the cyber design refresh as `c503db2`, with the Git tag `backup/original-poster-2026-11-19`. The tag is also saved on GitHub. The refreshed design is on `design/cyber-poster-refresh`.
+
+To inspect the original in a separate branch, first save any current edits, then run:
+
+```sh
+git switch -c review-original-poster backup/original-poster-2026-11-19
+```
+
+Return to the refreshed design with `git switch design/cyber-poster-refresh`. To restore the original files on the current branch without rewriting history, use `git restore --source=backup/original-poster-2026-11-19 -- .`, review the diff, and commit the restoration.
+
 ## Files and content
 
 - `index.html` and `styles.css`: responsive editor page.
@@ -44,4 +56,6 @@ The registration URL is present in `index.html` for accessible links and in `js/
 
 ## Assets
 
-Sponsor and organizer identities were supplied by Peshawar Pentesters and retain their original artwork. Cybrixen's supplied mark is 96 × 96; it is rendered compactly, with a readable company label beside it. Webverse's supplied artwork includes an opaque black background. Space Grotesk and DM Sans are bundled under the SIL Open Font License; license files are in `assets/fonts/`. Sponsor logos remain the property of their owners.
+Sponsor and organizer identities were supplied by Peshawar Pentesters and retain their original artwork and aspect ratios. The three exported sponsor cards are each 300 × 82 design pixels; the logo artwork is 48 design pixels tall (96 pixels in the exported image, allowing for transparent padding). Cybrixen's supplied mark is 96 × 96; only its transparent padding is cropped. Webverse's supplied artwork includes an opaque black background. Altered Security's complete logo is contained within its card at the same height as the other marks. The page footer uses equal cards and the same 48-pixel logo height, stacking the cards on small screens.
+
+Static poster labels are at least 20 design pixels, with larger date, time, and participation details. Editor text is at least 12 CSS pixels at every breakpoint, and input text is 16 pixels. Space Grotesk and DM Sans are bundled under the SIL Open Font License; license files are in `assets/fonts/`. Sponsor logos remain the property of their owners.

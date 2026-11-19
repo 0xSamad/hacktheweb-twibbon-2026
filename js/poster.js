@@ -1,9 +1,11 @@
 export const SIZE = Object.freeze({ width: 1080, height: 1350, scale: 2 });
-export const PHOTO = Object.freeze({ x: 306, y: 389, width: 522, height: 438, radius: 21 });
+export const PHOTO = Object.freeze({ x: 244, y: 420, width: 592, height: 414, radius: 8 });
 
 const asset = (file) => new URL(`../assets/${file}`, import.meta.url).href;
-const INK = '#0b0b0e';
-const CREAM = '#fff3bd';
+const INK = '#070e18';
+const CYAN = '#70ffe1';
+const WHITE = '#f4f8ff';
+const MUTED = '#b3c6d9';
 
 function loadImage(src) {
   return new Promise((resolve, reject) => {
@@ -59,10 +61,11 @@ export class Poster {
 
   fitText(text, x, y, width, size, color, weight = 700, options = {}) {
     let fitted = size;
-    this.ctx.font = `${weight} ${fitted}px ${options.font || 'Space'}`;
+    this.ctx.letterSpacing = `${options.spacing || 0}px`;
+    this.ctx.font = `${weight} ${fitted}px ${options.font || 'Space'}, Arial, sans-serif`;
     while (this.ctx.measureText(text).width > width && fitted > 13) {
       fitted -= 1;
-      this.ctx.font = `${weight} ${fitted}px ${options.font || 'Space'}`;
+      this.ctx.font = `${weight} ${fitted}px ${options.font || 'Space'}, Arial, sans-serif`;
     }
     this.text(text, x, y, fitted, color, weight, options);
   }
@@ -73,16 +76,54 @@ export class Poster {
     c.strokeStyle = color; c.lineWidth = width; c.stroke(); c.lineWidth = 1;
   }
 
-  star(x, y, radius, color, rotation = 0) {
+  flag(x, y, size, color) {
     const c = this.ctx;
-    c.save(); c.translate(x, y); c.rotate(rotation); c.beginPath();
-    for (let i = 0; i < 16; i++) {
-      const r = i % 2 === 0 ? radius : radius * 0.36;
-      const a = i * Math.PI / 8;
-      const px = Math.cos(a) * r, py = Math.sin(a) * r;
-      if (i === 0) c.moveTo(px, py); else c.lineTo(px, py);
+    c.save(); c.translate(x, y); c.scale(size / 48, size / 48);
+    this.line(8, 44, 8, 4, color, 3);
+    c.beginPath(); c.moveTo(10, 6); c.lineTo(39, 6); c.lineTo(31, 17);
+    c.lineTo(39, 28); c.lineTo(10, 28); c.closePath();
+    c.fillStyle = color; c.fill(); c.restore();
+  }
+
+  circuit(points, color = '#70ffe135') {
+    const c = this.ctx;
+    c.beginPath();
+    points.forEach(([x, y], i) => i ? c.lineTo(x, y) : c.moveTo(x, y));
+    c.strokeStyle = color; c.lineWidth = 2; c.stroke(); c.lineWidth = 1;
+    for (const [x, y] of [points[0], points[points.length - 1]]) {
+      c.beginPath(); c.arc(x, y, 4, 0, Math.PI * 2); c.fillStyle = color; c.fill();
     }
-    c.closePath(); c.fillStyle = color; c.fill(); c.restore();
+  }
+
+  corners(x, y, w, h, color = CYAN) {
+    const d = 23;
+    for (const [cx, cy, dx, dy] of [[x, y, 1, 1], [x + w, y, -1, 1], [x, y + h, 1, -1], [x + w, y + h, -1, -1]]) {
+      this.line(cx, cy, cx + dx * d, cy, color, 3);
+      this.line(cx, cy, cx, cy + dy * d, color, 3);
+    }
+  }
+
+  sponsors() {
+    const c = this.ctx;
+    c.fillStyle = '#050a11'; c.fillRect(0, 1194, SIZE.width, 156);
+    this.line(60, 1194, 1020, 1194, '#70ffe14d');
+    this.text('SUPPORTED BY', 60, 1225, 22, MUTED, 500, { spacing: 2 });
+    // Every sponsor has the same card, a 48 px visible mark, and unchanged proportions.
+    const y = 1242, cardWidth = 300, cardHeight = 82, markSize = 48;
+    [60, 390, 720].forEach((x) => this.rounded(x, y, cardWidth, cardHeight, 8, '#f4f8ff'));
+    const centerY = y + cardHeight / 2;
+    const lockup = (image, label, centerX, crop) => {
+      c.font = '700 24px Space, Arial, sans-serif';
+      const width = markSize + 14 + c.measureText(label).width;
+      const x = centerX - width / 2;
+      if (crop) c.drawImage(image, ...crop, x, centerY - markSize / 2, markSize, markSize);
+      else c.drawImage(image, x, centerY - markSize / 2, markSize, markSize);
+      this.text(label, x + markSize + 14, centerY + 8, 24, '#142239');
+    };
+    lockup(this.images.webverse, 'WEBVERSE', 210);
+    lockup(this.images.cybrixen, 'CYBRIXEN', 540, [15, 15, 66, 66]);
+    const alteredWidth = markSize * this.images.altered.width / this.images.altered.height;
+    c.drawImage(this.images.altered, 870 - alteredWidth / 2, centerY - markSize / 2, alteredWidth, markSize);
   }
 
   crop() {
@@ -107,106 +148,99 @@ export class Poster {
     c.setTransform(SIZE.scale, 0, 0, SIZE.scale, 0, 0);
     c.clearRect(0, 0, SIZE.width, SIZE.height);
 
-    // The composition is drawn as native canvas artwork, so text remains crisp on export.
-    const bg = c.createLinearGradient(0, 250, 260, 1230);
-    bg.addColorStop(0, INK); bg.addColorStop(0.19, '#150b27');
-    bg.addColorStop(0.52, '#570aa9'); bg.addColorStop(0.78, '#af00ed'); bg.addColorStop(1, '#eb10c2');
-    c.fillStyle = bg; c.fillRect(0, 0, 1080, 1350);
-    const glow = c.createRadialGradient(790, 960, 20, 790, 960, 650);
-    glow.addColorStop(0, '#e936ff45'); glow.addColorStop(1, '#e936ff00');
-    c.fillStyle = glow; c.fillRect(0, 350, 1080, 900);
-    // Subtle grid and crosshairs add a little CTF character to the reference's gradient.
-    for (let x = 50; x < 1080; x += 70) this.line(x, 390, x, 1190, '#ffffff06');
-    for (let y = 420; y < 1200; y += 70) this.line(0, y, 1080, y, '#ffffff06');
+    // Native canvas geometry and bundled fonts keep the export crisp and self-contained.
+    c.fillStyle = INK; c.fillRect(0, 0, SIZE.width, SIZE.height);
+    for (const [x, y, color] of [[180, 480, '#12695655'], [1030, 780, '#6a30bb44']]) {
+      const glow = c.createRadialGradient(x, y, 0, x, y, 650);
+      glow.addColorStop(0, color); glow.addColorStop(1, '#070e1800');
+      c.fillStyle = glow; c.fillRect(0, 0, SIZE.width, 1194);
+    }
+    for (let x = 12; x < 1080; x += 48) this.line(x, 138, x, 1194, '#70ffe109');
+    for (let y = 150; y < 1194; y += 48) this.line(0, y, 1080, y, '#70ffe109');
+    this.circuit([[60, 416], [112, 416], [160, 464], [160, 588], [206, 634]]);
+    this.circuit([[36, 684], [92, 684], [132, 724], [132, 894], [186, 948]]);
+    this.circuit([[1020, 420], [972, 420], [924, 468], [924, 564], [878, 610]]);
+    this.circuit([[1032, 722], [984, 722], [948, 758], [948, 928], [894, 982]], '#b79aff66');
+    this.circuit([[60, 1008], [102, 1008], [146, 964]], '#70ffe15c');
+    this.corners(40, 154, 1000, 1016, '#70ffe14a');
 
-    this.rounded(60, 45, 60, 60, 6, '#fff');
-    c.drawImage(this.images.organizer, 64, 49, 52, 52);
-    this.text('PESHAWAR', 135, 72, 21, '#fff', 700, { spacing: 1 });
-    this.text('PENTESTERS', 135, 95, 21, '#fff', 700, { spacing: 1 });
-    this.text('PRESENTS', 1020, 67, 12, '#b5aebf', 500, { align: 'right', spacing: 2 });
-    this.text('THE WEB IS YOUR PLAYGROUND.', 1020, 93, 14, CREAM, 500, { align: 'right' });
-    this.line(60, 131, 1020, 131, '#ffffff38');
+    this.rounded(60, 42, 66, 66, 6, '#fff');
+    c.drawImage(this.images.organizer, 64, 46, 58, 58);
+    this.text('PESHAWAR', 142, 70, 25, WHITE, 700, { spacing: 1 });
+    this.text('PENTESTERS', 142, 100, 25, WHITE, 700, { spacing: 1 });
+    this.rounded(724, 48, 296, 54, 5, '#102a2a', '#70ffe14d');
+    this.flag(740, 60, 30, CYAN);
+    this.text('CAPTURE THE FLAG', 785, 82, 22, CYAN);
+    this.line(60, 134, 1020, 134, '#70ffe155');
 
-    this.text('HACK THE WEB', 56, 229, 98, '#fff', 700, { spacing: -5 });
-    this.text('CTF', 57, 321, 96, CREAM, 700, { spacing: -5 });
-    this.rounded(266, 247, 238, 84, 8, '#7e24e9');
-    this.text('2026', 282, 314, 78, CREAM, 700, { spacing: -4 });
-    this.text('CAPTURE THE FLAG.', 1020, 283, 17, CREAM, 500, { align: 'right' });
-    this.text('CLAIM THE PRIZE.', 1020, 309, 17, CREAM, 500, { align: 'right' });
+    this.text('HACK THE WEB', 56, 237, 106, WHITE, 700, { spacing: -5 });
+    this.text('CTF', 60, 320, 72, CYAN, 700, { spacing: -3 });
+    this.rounded(212, 261, 209, 70, 5, CYAN);
+    this.text('2026', 233, 313, 57, INK, 700, { spacing: -2 });
+    this.text('WEB SECURITY CHALLENGE', 1020, 286, 25, WHITE, 500, { align: 'right' });
+    this.text('FIND THE FLAG. OWN THE WEB.', 1020, 322, 23, CYAN, 500, { align: 'right' });
 
-    // Offset label and cream photo card, inspired by the supplied participant badge.
-    const ribbon = c.createLinearGradient(240, 410, 300, 990);
-    ribbon.addColorStop(0, '#9a2bff'); ribbon.addColorStop(1, '#fa23c4');
-    this.rounded(232, 402, 586, 595, 34, ribbon);
-    c.save(); c.translate(269, 965); c.rotate(-Math.PI / 2);
-    this.text('HACK THE WEB ’26 / PARTICIPANT', 0, 0, 23, '#fff', 700, { spacing: 1 }); c.restore();
-    c.save(); c.shadowColor = '#13001b44'; c.shadowBlur = 35; c.shadowOffsetY = 13;
-    this.rounded(282, 365, 570, 632, 34, CREAM); c.restore();
+    // A terminal-style participant credential replaces the decorative event badge.
+    c.save(); c.shadowColor = '#70ffe125'; c.shadowBlur = 38;
+    this.rounded(222, 366, 636, 644, 12, '#101e2c', '#70ffe166'); c.restore();
+    this.corners(218, 362, 644, 652);
+    [254, 276, 298].forEach((x, i) => {
+      c.beginPath(); c.arc(x, 392, 5, 0, Math.PI * 2);
+      c.fillStyle = ['#b79aff', '#f5d980', CYAN][i]; c.fill();
+    });
+    this.text('PARTICIPANT // HACK THE WEB', 324, 400, 22, MUTED, 500);
 
     c.save(); c.beginPath(); c.roundRect(PHOTO.x, PHOTO.y, PHOTO.width, PHOTO.height, PHOTO.radius); c.clip();
     if (this.photo) {
       const p = this.crop();
-      c.fillStyle = '#e7e2d4'; c.fillRect(PHOTO.x, PHOTO.y, PHOTO.width, PHOTO.height);
+      c.fillStyle = '#172b3a'; c.fillRect(PHOTO.x, PHOTO.y, PHOTO.width, PHOTO.height);
       c.drawImage(this.photo, p.x, p.y, p.width, p.height);
     } else {
       this.placeholder();
     }
     c.restore();
+    this.corners(PHOTO.x, PHOTO.y, PHOTO.width, PHOTO.height, '#70ffe190');
 
     const name = this.name.trim() || 'YOUR NAME';
-    const lines = this.nameLines(name, 375, 43);
-    lines.forEach((line, i) => this.fitText(line, 308, 874 + i * 43, 375, 43, INK, 700, { spacing: -1 }));
-    this.fitText(this.title.trim() || 'CTF PARTICIPANT', 309, 970, 370, 18, '#4f4439', 500, { font: 'DM' });
+    const lines = this.nameLines(name, 445, 44);
+    lines.forEach((line, i) => this.fitText(line, 246, 885 + i * 46, 445, 44, WHITE, 700, { spacing: -1 }));
+    this.fitText(this.title.trim() || 'CTF PARTICIPANT', 246, 981, 445, 26, CYAN, 500, { font: 'DM' });
+    this.rounded(716, 854, 120, 120, 4, '#fff');
     c.imageSmoothingEnabled = false;
-    c.drawImage(this.images.qr, 714, 858, 108, 108);
+    c.drawImage(this.images.qr, 722, 860, 108, 108);
     c.imageSmoothingEnabled = true;
-    this.text('JOIN THE CHALLENGE', 768, 979, 9, INK, 700, { align: 'center' });
-    this.star(933, 444, 48, CREAM, Math.PI / 12);
-    this.star(136, 879, 26, '#fff3bdba', Math.PI / 8);
-    this.line(926, 859, 970, 859, '#fff3bd90', 2); this.line(948, 837, 948, 881, '#fff3bd90', 2);
-    this.line(112, 498, 140, 498, '#fff3bd70', 1.5); this.line(126, 484, 126, 512, '#fff3bd70', 1.5);
-    this.text('I’M IN.', 948, 974, 27, '#fff', 700, { align: 'center' });
+    this.text('JOIN CTF', 776, 998, 20, MUTED, 500, { align: 'center' });
+    c.save(); c.translate(106, 925); c.rotate(-Math.PI / 2);
+    this.text('WEB SECURITY / CAPTURE THE FLAG', 0, 0, 23, MUTED, 500, { spacing: 2 }); c.restore();
+    c.save(); c.translate(991, 518); c.rotate(Math.PI / 2);
+    this.text('EXPLORE. EXPLOIT. CAPTURE.', 0, 0, 23, '#c8b2f5', 500, { spacing: 2 }); c.restore();
+    this.flag(900, 924, 54, '#b79aff');
 
-    this.rounded(60, 1044, 960, 102, 12, '#17042558', '#fff3bd55');
-    this.text('05', 84, 1115, 59, CREAM, 700, { spacing: -3 });
-    this.text('DECEMBER', 168, 1089, 19, '#fff', 700);
-    this.text('2026', 168, 1117, 19, '#fff', 500);
-    this.line(353, 1066, 353, 1124, '#fff3bd50');
-    this.text('8–11 PM', 382, 1090, 29, CREAM, 700, { spacing: -1 });
-    this.text('PAKISTAN TIME · UTC+5', 383, 1118, 13, '#fff', 500);
-    this.line(701, 1066, 701, 1124, '#fff3bd50');
-    this.text('ONLINE', 730, 1090, 29, CREAM, 700, { spacing: -1 });
-    this.text('FREE · INDIVIDUAL', 732, 1118, 14, '#fff', 500);
-    this.text('YOUR NEXT CHALLENGE STARTS HERE.', 540, 1191, 17, '#fff', 500, { align: 'center', spacing: 2 });
-
-    // All three supplied sponsor identities appear in the downloaded poster.
-    c.fillStyle = INK; c.fillRect(0, 1224, 1080, 126);
-    this.text('SUPPORTED BY', 60, 1252, 9, '#bfb6ce', 500, { spacing: 2 });
-    c.drawImage(this.images.webverse, 60, 1264, 59, 59);
-    this.text('WEBVERSE', 132, 1300, 21, CREAM, 700, { spacing: 0.5 });
-    this.line(363, 1268, 363, 1316, '#ffffff2a');
-    // Crop only the transparent padding, preserving the sponsor's actual mark.
-    c.drawImage(this.images.cybrixen, 15, 15, 66, 66, 405, 1274, 43, 43);
-    this.text('CYBRIXEN', 461, 1300, 21, '#f4f1ff', 700, { spacing: 0.5 });
-    this.line(674, 1268, 674, 1316, '#ffffff2a');
-    this.rounded(714, 1260, 306, 74, 5, '#fff');
-    const alteredHeight = 64;
-    const alteredWidth = alteredHeight * this.images.altered.width / this.images.altered.height;
-    c.drawImage(this.images.altered, 867 - alteredWidth / 2, 1265, alteredWidth, alteredHeight);
+    this.rounded(60, 1044, 960, 106, 8, '#102231', '#70ffe155');
+    this.text('05 DEC', 84, 1088, 34, WHITE);
+    this.text('2026', 84, 1125, 27, CYAN, 500);
+    this.line(324, 1064, 324, 1130, '#70ffe155');
+    this.text('8–11 PM', 352, 1088, 34, WHITE);
+    this.text('PKT / UTC+5', 352, 1125, 25, CYAN, 500);
+    this.line(670, 1064, 670, 1130, '#70ffe155');
+    this.text('ONLINE', 698, 1088, 34, WHITE);
+    this.text('FREE · INDIVIDUAL', 698, 1125, 25, CYAN, 500);
+    this.sponsors();
   }
 
   placeholder() {
     const c = this.ctx;
     const fill = c.createLinearGradient(PHOTO.x, PHOTO.y, PHOTO.x + PHOTO.width, PHOTO.y + PHOTO.height);
-    fill.addColorStop(0, '#6c1bdb'); fill.addColorStop(1, '#c242e9');
+    fill.addColorStop(0, '#123b3d'); fill.addColorStop(1, '#202240');
     c.fillStyle = fill; c.fillRect(PHOTO.x, PHOTO.y, PHOTO.width, PHOTO.height);
-    c.strokeStyle = '#fff3bd35'; c.lineWidth = 1;
-    for (let r = 120; r <= 470; r += 75) { c.beginPath(); c.arc(567, 608, r, 0, Math.PI * 2); c.stroke(); }
-    c.fillStyle = '#fff3bd19'; c.beginPath(); c.arc(567, 574, 66, 0, Math.PI * 2); c.fill();
-    c.beginPath(); c.ellipse(567, 755, 134, 112, 0, 0, Math.PI * 2); c.fill();
-    this.rounded(473, 597, 188, 48, 24, '#16052cba', '#ffffff24');
-    this.text('YOUR PHOTO HERE', 567, 627, 14, CREAM, 700, { align: 'center', spacing: 1 });
-    this.text('THIS IS YOUR MOMENT.', 567, 431, 12, '#ffffffbc', 500, { align: 'center', spacing: 2 });
+    for (let y = PHOTO.y; y < PHOTO.y + PHOTO.height; y += 8) this.line(PHOTO.x, y, PHOTO.x + PHOTO.width, y, '#70ffe108');
+    c.strokeStyle = '#70ffe12b'; c.lineWidth = 1;
+    for (let r = 128; r <= 320; r += 70) { c.beginPath(); c.arc(540, 637, r, 0, Math.PI * 2); c.stroke(); }
+    c.fillStyle = '#b3c6d926'; c.beginPath(); c.arc(540, 585, 62, 0, Math.PI * 2); c.fill();
+    c.beginPath(); c.ellipse(540, 780, 132, 122, 0, 0, Math.PI * 2); c.fill();
+    this.rounded(388, 637, 304, 62, 4, '#07131f', '#70ffe155');
+    this.text('YOUR PHOTO HERE', 540, 676, 25, CYAN, 700, { align: 'center' });
+    this.text('THE NEXT FLAG IS YOURS.', 540, 470, 23, WHITE, 500, { align: 'center', spacing: 1 });
   }
 
   nameLines(name, width, size) {
@@ -214,7 +248,11 @@ export class Poster {
     c.font = `700 ${size}px Space`;
     if (c.measureText(name).width <= width) return [name];
     const words = name.split(/\s+/);
-    if (words.length < 2) return [name];
+    if (words.length < 2) {
+      const letters = Array.from(name);
+      const middle = Math.ceil(letters.length / 2);
+      return [letters.slice(0, middle).join(''), letters.slice(middle).join('')];
+    }
     let split = 1, best = Infinity;
     for (let i = 1; i < words.length; i++) {
       const left = c.measureText(words.slice(0, i).join(' ')).width;
