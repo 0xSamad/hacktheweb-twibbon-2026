@@ -30,6 +30,4 @@ Supported by Webverse, Cybrixen, and Altered Security.
 🔗 Register: ${EVENT.registration}
 💬 Join our Discord: ${EVENT.discord}
 
-Tag Peshawar Pentesters: ${EVENT.linkedin}
-
 #HackTheWebCTF #PeshawarPentesters #CTF2026 #WebSecurity #EthicalHacking #WebverseLabs #Cybrixen #AlteredSecurity`;
