@@ -119,8 +119,8 @@ export class Poster {
     for (let x = 50; x < 1080; x += 70) this.line(x, 390, x, 1190, '#ffffff06');
     for (let y = 420; y < 1200; y += 70) this.line(0, y, 1080, y, '#ffffff06');
 
-    this.rounded(60, 45, 60, 60, 6, '#fff');
-    c.drawImage(this.images.organizer, 64, 49, 52, 52);
+    this.rounded(56, 41, 68, 68, 6, '#fff');
+    c.drawImage(this.images.organizer, 60, 45, 60, 60);
     this.text('PESHAWAR', 135, 72, 21, '#fff', 700, { spacing: 1 });
     this.text('PENTESTERS', 135, 95, 21, '#fff', 700, { spacing: 1 });
     this.text('PRESENTS', 1020, 67, 16, '#b5aebf', 500, { align: 'right', spacing: 2 });
@@ -182,17 +182,18 @@ export class Poster {
     // All three supplied sponsor identities appear in the downloaded poster.
     c.fillStyle = INK; c.fillRect(0, 1224, 1080, 126);
     this.text('SUPPORTED BY', 60, 1252, 15, '#bfb6ce', 500, { spacing: 2 });
-    // Match the visible height of all three marks while preserving their proportions.
+    // Preserve each mark's proportions, with Webverse and Cybrixen slightly emphasized.
     const sponsorLogoSize = 48;
     const sponsorLogoY = 1296 - sponsorLogoSize / 2;
     // Trim only the black margin and compensate for the fine web details at this scale.
-    const webverseSize = 54;
+    const webverseSize = 62;
     c.drawImage(this.images.webverse, 48, 60, 416, 392, 60, 1296 - webverseSize / 2, webverseSize * 416 / 392, webverseSize);
-    this.text('WEBVERSE', 132, 1300, 23, CREAM, 700, { spacing: 0.5 });
+    this.text('WEBVERSE', 140, 1300, 23, CREAM, 700, { spacing: 0.5 });
     this.line(363, 1268, 363, 1316, '#ffffff2a');
     // Crop only the transparent padding, preserving the sponsor's actual mark.
-    c.drawImage(this.images.cybrixen, 15, 15, 66, 66, 405, sponsorLogoY, sponsorLogoSize, sponsorLogoSize);
-    this.text('CYBRIXEN', 466, 1300, 23, '#f4f1ff', 700, { spacing: 0.5 });
+    const cybrixenSize = 55;
+    c.drawImage(this.images.cybrixen, 15, 15, 66, 66, 405, 1296 - cybrixenSize / 2, cybrixenSize, cybrixenSize);
+    this.text('CYBRIXEN', 473, 1300, 23, '#f4f1ff', 700, { spacing: 0.5 });
     this.line(674, 1268, 674, 1316, '#ffffff2a');
     const alteredWidth = sponsorLogoSize * this.images.altered.width / this.images.altered.height;
     this.rounded(867 - alteredWidth / 2 - 8, sponsorLogoY - 8, alteredWidth + 16, sponsorLogoSize + 16, 5, '#fff');

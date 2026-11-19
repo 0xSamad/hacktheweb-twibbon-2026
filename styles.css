@@ -12,15 +12,19 @@
 @media(max-width:520px){.header-nav>a:first-child{display:none}.site-header{height:74px}.header-nav .register-link{font-size:12px;padding:9px 11px}.intro{padding:29px 0 25px;display:block}.intro-copy{position:relative}.intro .eyebrow{margin-bottom:14px}h1{font-size:43px;margin-bottom:13px}.title-spark{width:33px;height:33px}.intro-description{font-size:14px}.event-stamp{margin-top:22px;width:100%;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:14px 17px;transform:none;box-shadow:none;border-top-width:2px;column-gap:15px}.stamp-label{grid-column:1;grid-row:1;font-size:11px}.event-stamp strong{grid-column:1;grid-row:2;font-size:35px;line-height:1.2;margin-top:5px}.event-stamp strong span{font-size:15px}.event-stamp p{grid-column:2;grid-row:1 / span 2;border-left:1px solid #cccac2;padding-left:19px;margin:0;font-size:16px}.event-stamp p span{font-size:11px}.event-stamp>div{grid-column:1 / -1;font-size:11px;margin-top:12px;padding-top:9px;justify-content:center;gap:14px}.panel-heading{font-size:11px}.editor-column{display:block}.editor-card,.share-card{padding:23px}.share-card{margin-top:16px}.share-actions{grid-template-columns:1fr 1fr}.registration-note{padding-top:20px}.sponsor-list{gap:10px;flex-wrap:wrap;justify-content:center}.sponsor{font-size:12px;gap:4px}.sponsor.webverse img{width:39px;height:39px}.sponsor.cybrixen img{width:45px;height:45px}.sponsor.altered img{width:123px;height:39px}.sponsors>div:first-child{width:100%;text-align:center}.sponsors .eyebrow{justify-content:center}.site-footer{flex-wrap:wrap;padding-bottom:20px;row-gap:12px}.site-footer>span:nth-child(2){display:none}.studio{padding-bottom:30px}.preview-note{font-size:11px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;scroll-behavior:auto!important}}
 
-/* Match visible sponsor heights after accounting for the supplied image margins. */
-.sponsor-mark { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; flex-shrink: 0; overflow: hidden; }
-.sponsor.webverse .sponsor-mark { width: 57.306px; height: 54px; }
-.sponsor.webverse img { width: 70.531px; height: 70.531px; flex-shrink: 0; }
-.sponsor.cybrixen img { width: 48px; height: 48px; transform: scale(1.454545); }
+/* Account for image margins and slightly emphasize the requested sponsor marks. */
+.sponsor-mark { display: flex; align-items: center; justify-content: center; width: 55px; height: 55px; flex-shrink: 0; overflow: hidden; }
+.sponsor.webverse .sponsor-mark { width: 65.796px; height: 62px; }
+.sponsor.webverse img { width: 80.980px; height: 80.980px; flex-shrink: 0; }
+.sponsor.cybrixen img { width: 55px; height: 55px; transform: scale(1.454545); }
 .sponsor.altered img { width: auto; height: 48px; }
+.brand img { width: 50px; height: 50px; }
+@media (max-width: 760px) {
+  .brand img { width: 40px; height: 40px; }
+}
 @media (max-width: 520px) {
-  .sponsor-mark, .sponsor.cybrixen img { width: 36px; height: 36px; }
-  .sponsor.webverse .sponsor-mark { width: 42.980px; height: 40.5px; }
-  .sponsor.webverse img { width: 52.898px; height: 52.898px; }
+  .sponsor-mark, .sponsor.cybrixen img { width: 41.5px; height: 41.5px; }
+  .sponsor.webverse .sponsor-mark { width: 49.347px; height: 46.5px; }
+  .sponsor.webverse img { width: 60.735px; height: 60.735px; }
   .sponsor.altered img { width: auto; height: 36px; }
 }

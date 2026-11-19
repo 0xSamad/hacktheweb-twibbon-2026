@@ -4,11 +4,11 @@ Original-design text and sponsor adjustments checked locally in Chromium on 19 N
 
 - Desktop layout at 1440 px and mobile layout at 390 px; screenshots in this folder.
 - No horizontal overflow at 320, 390, 520, 768, 1000, or 1440 px.
-- The new empty poster is compared pixel by pixel with a fresh render of the saved original commit. All pixels outside the intended small-text and sponsor areas are identical, including the gradient, stars, main headings, photo frame, and other artwork.
+- The original-design correction was compared pixel by pixel with a fresh render of the saved original commit. All pixels outside the intended small-text and sponsor areas matched. The later logo enlargement is compared with commit `29b9f10`: only the organizer mark and the Webverse/Cybrixen groups differ. The gradient, stars, main headings, photo frame, and Altered Security logo match that commit exactly.
 - PNG upload, name-required download gating, a two-line participant name, and the enlarged optional title.
 - Zoom and reset photo controls.
 - JPEG and PNG downloads both open as 2160 × 2700 images.
-- Sponsor artwork heights measured from an actual exported PNG are 95, 94, and 94 pixels for Webverse, Cybrixen, and Altered Security, after transparent/plain background padding is accounted for.
+- Peshawar Pentesters, Webverse, and Cybrixen have approximately 15% larger marks than the initial balanced-logo revision. The page header logo is 50 px on desktop and 40 px on smaller screens. Altered Security retains its previous dimensions.
 - Desktop, mobile, and poster screenshots in this folder show the original design with the typography and sponsor adjustments.
 - No JavaScript page errors during the checked flows.
 
