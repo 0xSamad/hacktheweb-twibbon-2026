@@ -27,6 +27,10 @@ npm run dev
 
 Open http://127.0.0.1:5173. A static HTTP server also works. Use HTTP rather than opening `index.html` as a `file://` URL because the app uses JavaScript modules.
 
+## Design checkpoint
+
+The original website is saved as commit `c503db2` and the GitHub tag `backup/original-poster-2026-11-19`. The `fix/original-poster-readability` branch starts from that checkpoint and adjusts only sponsor sizing and small text. The original colors, layout, artwork, wording, and photo frame are retained.
+
 ## Files and content
 
 - `index.html` and `styles.css`: responsive editor page.
@@ -44,4 +48,4 @@ The registration URL is present in `index.html` for accessible links and in `js/
 
 ## Assets
 
-Sponsor and organizer identities were supplied by Peshawar Pentesters and retain their original artwork. Cybrixen's supplied mark is 96 × 96; it is rendered compactly, with a readable company label beside it. Webverse's supplied artwork includes an opaque black background. Space Grotesk and DM Sans are bundled under the SIL Open Font License; license files are in `assets/fonts/`. Sponsor logos remain the property of their owners.
+Sponsor and organizer identities were supplied by Peshawar Pentesters and retain their original artwork and proportions. Sponsor marks use matching visible heights on the poster and page footer. Only the plain black margin around Webverse and transparent padding around Cybrixen are trimmed during rendering; the source assets are unchanged. Webverse is optically adjusted for its fine line details. Altered Security's logo and its white plaque are reduced to balance the row. Space Grotesk and DM Sans are bundled under the SIL Open Font License; license files are in `assets/fonts/`. Sponsor logos remain the property of their owners.

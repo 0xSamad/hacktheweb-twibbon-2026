@@ -123,16 +123,16 @@ export class Poster {
     c.drawImage(this.images.organizer, 64, 49, 52, 52);
     this.text('PESHAWAR', 135, 72, 21, '#fff', 700, { spacing: 1 });
     this.text('PENTESTERS', 135, 95, 21, '#fff', 700, { spacing: 1 });
-    this.text('PRESENTS', 1020, 67, 12, '#b5aebf', 500, { align: 'right', spacing: 2 });
-    this.text('THE WEB IS YOUR PLAYGROUND.', 1020, 93, 14, CREAM, 500, { align: 'right' });
+    this.text('PRESENTS', 1020, 67, 16, '#b5aebf', 500, { align: 'right', spacing: 2 });
+    this.text('THE WEB IS YOUR PLAYGROUND.', 1020, 93, 18, CREAM, 500, { align: 'right' });
     this.line(60, 131, 1020, 131, '#ffffff38');
 
     this.text('HACK THE WEB', 56, 229, 98, '#fff', 700, { spacing: -5 });
     this.text('CTF', 57, 321, 96, CREAM, 700, { spacing: -5 });
     this.rounded(266, 247, 238, 84, 8, '#7e24e9');
     this.text('2026', 282, 314, 78, CREAM, 700, { spacing: -4 });
-    this.text('CAPTURE THE FLAG.', 1020, 283, 17, CREAM, 500, { align: 'right' });
-    this.text('CLAIM THE PRIZE.', 1020, 309, 17, CREAM, 500, { align: 'right' });
+    this.text('CAPTURE THE FLAG.', 1020, 283, 21, CREAM, 500, { align: 'right' });
+    this.text('CLAIM THE PRIZE.', 1020, 309, 21, CREAM, 500, { align: 'right' });
 
     // Offset label and cream photo card, inspired by the supplied participant badge.
     const ribbon = c.createLinearGradient(240, 410, 300, 990);
@@ -156,11 +156,11 @@ export class Poster {
     const name = this.name.trim() || 'YOUR NAME';
     const lines = this.nameLines(name, 375, 43);
     lines.forEach((line, i) => this.fitText(line, 308, 874 + i * 43, 375, 43, INK, 700, { spacing: -1 }));
-    this.fitText(this.title.trim() || 'CTF PARTICIPANT', 309, 970, 370, 18, '#4f4439', 500, { font: 'DM' });
+    this.fitText(this.title.trim() || 'CTF PARTICIPANT', 309, 970, 370, 22, '#4f4439', 500, { font: 'DM' });
     c.imageSmoothingEnabled = false;
     c.drawImage(this.images.qr, 714, 858, 108, 108);
     c.imageSmoothingEnabled = true;
-    this.text('JOIN THE CHALLENGE', 768, 979, 9, INK, 700, { align: 'center' });
+    this.text('JOIN THE CHALLENGE', 768, 981, 13, INK, 700, { align: 'center' });
     this.star(933, 444, 48, CREAM, Math.PI / 12);
     this.star(136, 879, 26, '#fff3bdba', Math.PI / 8);
     this.line(926, 859, 970, 859, '#fff3bd90', 2); this.line(948, 837, 948, 881, '#fff3bd90', 2);
@@ -169,30 +169,34 @@ export class Poster {
 
     this.rounded(60, 1044, 960, 102, 12, '#17042558', '#fff3bd55');
     this.text('05', 84, 1115, 59, CREAM, 700, { spacing: -3 });
-    this.text('DECEMBER', 168, 1089, 19, '#fff', 700);
-    this.text('2026', 168, 1117, 19, '#fff', 500);
+    this.text('DECEMBER', 168, 1089, 21, '#fff', 700);
+    this.text('2026', 168, 1117, 21, '#fff', 500);
     this.line(353, 1066, 353, 1124, '#fff3bd50');
     this.text('8–11 PM', 382, 1090, 29, CREAM, 700, { spacing: -1 });
-    this.text('PAKISTAN TIME · UTC+5', 383, 1118, 13, '#fff', 500);
+    this.text('PAKISTAN TIME · UTC+5', 383, 1118, 18, '#fff', 500);
     this.line(701, 1066, 701, 1124, '#fff3bd50');
     this.text('ONLINE', 730, 1090, 29, CREAM, 700, { spacing: -1 });
-    this.text('FREE · INDIVIDUAL', 732, 1118, 14, '#fff', 500);
-    this.text('YOUR NEXT CHALLENGE STARTS HERE.', 540, 1191, 17, '#fff', 500, { align: 'center', spacing: 2 });
+    this.text('FREE · INDIVIDUAL', 732, 1118, 19, '#fff', 500);
+    this.text('YOUR NEXT CHALLENGE STARTS HERE.', 540, 1191, 20, '#fff', 500, { align: 'center', spacing: 2 });
 
     // All three supplied sponsor identities appear in the downloaded poster.
     c.fillStyle = INK; c.fillRect(0, 1224, 1080, 126);
-    this.text('SUPPORTED BY', 60, 1252, 9, '#bfb6ce', 500, { spacing: 2 });
-    c.drawImage(this.images.webverse, 60, 1264, 59, 59);
-    this.text('WEBVERSE', 132, 1300, 21, CREAM, 700, { spacing: 0.5 });
+    this.text('SUPPORTED BY', 60, 1252, 15, '#bfb6ce', 500, { spacing: 2 });
+    // Match the visible height of all three marks while preserving their proportions.
+    const sponsorLogoSize = 48;
+    const sponsorLogoY = 1296 - sponsorLogoSize / 2;
+    // Trim only the black margin and compensate for the fine web details at this scale.
+    const webverseSize = 54;
+    c.drawImage(this.images.webverse, 48, 60, 416, 392, 60, 1296 - webverseSize / 2, webverseSize * 416 / 392, webverseSize);
+    this.text('WEBVERSE', 132, 1300, 23, CREAM, 700, { spacing: 0.5 });
     this.line(363, 1268, 363, 1316, '#ffffff2a');
     // Crop only the transparent padding, preserving the sponsor's actual mark.
-    c.drawImage(this.images.cybrixen, 15, 15, 66, 66, 405, 1274, 43, 43);
-    this.text('CYBRIXEN', 461, 1300, 21, '#f4f1ff', 700, { spacing: 0.5 });
+    c.drawImage(this.images.cybrixen, 15, 15, 66, 66, 405, sponsorLogoY, sponsorLogoSize, sponsorLogoSize);
+    this.text('CYBRIXEN', 466, 1300, 23, '#f4f1ff', 700, { spacing: 0.5 });
     this.line(674, 1268, 674, 1316, '#ffffff2a');
-    this.rounded(714, 1260, 306, 74, 5, '#fff');
-    const alteredHeight = 64;
-    const alteredWidth = alteredHeight * this.images.altered.width / this.images.altered.height;
-    c.drawImage(this.images.altered, 867 - alteredWidth / 2, 1265, alteredWidth, alteredHeight);
+    const alteredWidth = sponsorLogoSize * this.images.altered.width / this.images.altered.height;
+    this.rounded(867 - alteredWidth / 2 - 8, sponsorLogoY - 8, alteredWidth + 16, sponsorLogoSize + 16, 5, '#fff');
+    c.drawImage(this.images.altered, 867 - alteredWidth / 2, sponsorLogoY, alteredWidth, sponsorLogoSize);
   }
 
   placeholder() {
@@ -205,8 +209,8 @@ export class Poster {
     c.fillStyle = '#fff3bd19'; c.beginPath(); c.arc(567, 574, 66, 0, Math.PI * 2); c.fill();
     c.beginPath(); c.ellipse(567, 755, 134, 112, 0, 0, Math.PI * 2); c.fill();
     this.rounded(473, 597, 188, 48, 24, '#16052cba', '#ffffff24');
-    this.text('YOUR PHOTO HERE', 567, 627, 14, CREAM, 700, { align: 'center', spacing: 1 });
-    this.text('THIS IS YOUR MOMENT.', 567, 431, 12, '#ffffffbc', 500, { align: 'center', spacing: 2 });
+    this.text('YOUR PHOTO HERE', 567, 627, 18, CREAM, 700, { align: 'center', spacing: 1 });
+    this.text('THIS IS YOUR MOMENT.', 567, 431, 16, '#ffffffbc', 500, { align: 'center', spacing: 2 });
   }
 
   nameLines(name, width, size) {
