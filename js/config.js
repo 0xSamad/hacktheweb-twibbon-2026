@@ -18,6 +18,9 @@ I'm participating in HACK THE WEB CTF 2026, hosted by Peshawar Pentesters!
 
 Capture the flag, claim the prize. Let's meet on the leaderboard.
 
+🏆 Prizes for the top 25 participants! Can you make the top 25?
+📜 Certificates of participation for everyone!
+
 📅 ${EVENT.date}
 🕗 ${EVENT.time} Pakistan time (UTC+5)
 🌐 Online · Free · Individual
